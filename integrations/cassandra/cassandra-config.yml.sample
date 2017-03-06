@@ -1,0 +1,20 @@
+integration_name: com.newrelic.cassandra
+
+instances:
+    - name: cassandra-metrics
+      command: metrics
+      arguments:
+          hostname: localhost
+          port: 7199
+          username: testUser
+          password: testPassword
+      labels:
+          env: production
+          role: cassandra
+    - name: cassandra-inventory
+      command: inventory
+      arguments:
+          config_path: /etc/cassandra.yml
+      labels:
+          env: production
+          role: cassandra
