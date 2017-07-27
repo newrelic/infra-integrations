@@ -161,6 +161,7 @@ var jmxPatterns = []string{
 	"org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=*,name=ActiveTasks",
 	"org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=*,name=PendingTasks",
 	"org.apache.cassandra.metrics:type=DroppedMessage,scope=*,name=Dropped",
+	"org.apache.cassandra.metrics:type=Storage,name=Load",
 	"org.apache.cassandra.metrics:type=Storage,name=TotalHints",
 	"org.apache.cassandra.metrics:type=Storage,name=TotalHintsInProgress",
 	"org.apache.cassandra.metrics:type=Cache,scope=*,name=*",
