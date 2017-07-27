@@ -10,4 +10,4 @@ instances:
         password: <YOUR_SELECTED_PASSWORD>
     labels:
         env: production
-        role: load_balancer
+        role: write-replica
