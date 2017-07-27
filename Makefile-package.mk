@@ -12,7 +12,7 @@ PACKAGER           = "New Relic Infrastructure Team <infrastructure-eng@newrelic
 PACKAGE_URL        = "https://www.newrelic.com/infrastructure"
 SUMMARY            = "New Relic Infrastructure Integrations"
 DESCRIPTION        = "New Relic Infrastructure Integrations extend the core New Relic\nInfrastructure agent's capabilities to allow you to collect metric and\nlive state data from your infrastructure components such as MySQL,\nNGINX and Cassandra."
-FPM_COMMON_OPTIONS = --verbose -C $(SOURCE_DIR) -s dir -n $(PROJECT_NAME) -v $(VERSION) --prefix "" --iteration 1 --license $(LICENSE) --vendor $(VENDOR) -m $(PACKAGER) --url $(PACKAGE_URL) --config-files /etc/newrelic-infra/ --description "$$(printf $(DESCRIPTION))" --depends "nrjmx"
+FPM_COMMON_OPTIONS = --verbose -C $(SOURCE_DIR) -s dir -n $(PROJECT_NAME) -v $(VERSION) --prefix "" --iteration 1 --license $(LICENSE) --vendor $(VENDOR) -m $(PACKAGER) --url $(PACKAGE_URL) --config-files /etc/newrelic-infra/ --description "$$(printf $(DESCRIPTION))" --depends "nrjmx" --depends "newrelic-infra >= 1.0.726"
 FPM_DEB_OPTIONS    = -t deb -p $(PACKAGE_DIR)/deb/$(DEB_FILENAME)
 FPM_RPM_OPTIONS    = -t rpm -p $(PACKAGE_DIR)/rpm/$(RPM_FILENAME) --epoch 0 --rpm-summary $(SUMMARY)
 
