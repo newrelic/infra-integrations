@@ -3,18 +3,18 @@ PROJECT_NAME       = newrelic-infra-integrations
 BINS_PREFIX        = nr
 BINS_DIR           = $(TARGET_DIR)/bin/linux_amd64
 SOURCE_DIR         = $(TARGET_DIR)/source
-PACKAGE_DIR        = $(TARGET_DIR)/package
-DEB_FILENAME      := $(PROJECT_NAME)_$(VERSION)_amd64.deb
-RPM_FILENAME      := $(PROJECT_NAME)-$(subst -,_,$(VERSION))-1.x86_64.rpm
+PACKAGES_DIR       = $(TARGET_DIR)/packages
+VERSION           ?= 0.0.0
+RELEASE           ?= dev
 LICENSE            = "https://newrelic.com/terms (also see LICENSE.txt installed with this package)"
 VENDOR             = "New Relic, Inc."
 PACKAGER           = "New Relic Infrastructure Team <infrastructure-eng@newrelic.com>"
 PACKAGE_URL        = "https://www.newrelic.com/infrastructure"
 SUMMARY            = "New Relic Infrastructure Integrations"
 DESCRIPTION        = "New Relic Infrastructure Integrations extend the core New Relic\nInfrastructure agent's capabilities to allow you to collect metric and\nlive state data from your infrastructure components such as MySQL,\nNGINX and Cassandra."
-FPM_COMMON_OPTIONS = --verbose -C $(SOURCE_DIR) -s dir -n $(PROJECT_NAME) -v $(VERSION) --prefix "" --iteration 1 --license $(LICENSE) --vendor $(VENDOR) -m $(PACKAGER) --url $(PACKAGE_URL) --config-files /etc/newrelic-infra/ --description "$$(printf $(DESCRIPTION))" --depends "nrjmx" --depends "newrelic-infra >= 1.0.726"
-FPM_DEB_OPTIONS    = -t deb -p $(PACKAGE_DIR)/deb/$(DEB_FILENAME)
-FPM_RPM_OPTIONS    = -t rpm -p $(PACKAGE_DIR)/rpm/$(RPM_FILENAME) --epoch 0 --rpm-summary $(SUMMARY)
+FPM_COMMON_OPTIONS = --verbose -C $(SOURCE_DIR) -s dir -n $(PROJECT_NAME) -v $(VERSION) --iteration $(RELEASE) --prefix "" --license $(LICENSE) --vendor $(VENDOR) -m $(PACKAGER) --url $(PACKAGE_URL) --config-files /etc/newrelic-infra/ --description "$$(printf $(DESCRIPTION))" --depends "newrelic-infra >= 1.0.726" --depends "nrjmx"
+FPM_DEB_OPTIONS    = -t deb -p $(PACKAGES_DIR)/deb/
+FPM_RPM_OPTIONS    = -t rpm -p $(PACKAGES_DIR)/rpm/ --epoch 0 --rpm-summary $(SUMMARY)
 
 package: create-bins prep-pkg-env $(PACKAGE_TYPES)
 
@@ -53,12 +53,12 @@ prep-pkg-env:
 
 deb: prep-pkg-env
 	@echo "=== Main === [ deb ]: building DEB package..."
-	@mkdir -p $(PACKAGE_DIR)/deb
+	@mkdir -p $(PACKAGES_DIR)/deb
 	@fpm $(FPM_COMMON_OPTIONS) $(FPM_DEB_OPTIONS) .
 
 rpm: prep-pkg-env
 	@echo "=== Main === [ rpm ]: building RPM package..."
-	@mkdir -p $(PACKAGE_DIR)/rpm
+	@mkdir -p $(PACKAGES_DIR)/rpm
 	@fpm $(FPM_COMMON_OPTIONS) $(FPM_RPM_OPTIONS) .
 
-.PHONY: package create-bins prep-pkg-env deb rpm
+.PHONY: package create-bins prep-pkg-env $(PACKAGE_TYPES)

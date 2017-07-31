@@ -1,5 +1,5 @@
-VALIDATE_DEPS     = github.com/golang/lint/golint
-TEST_DEPS         = github.com/axw/gocov/gocov github.com/AlekSi/gocov-xml
+VALIDATE_DEPS = github.com/golang/lint/golint
+TEST_DEPS     = github.com/axw/gocov/gocov github.com/AlekSi/gocov-xml
 
 build: clean validate test compile
 
