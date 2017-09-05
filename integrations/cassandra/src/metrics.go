@@ -32,7 +32,7 @@ func getMetrics() (map[string]interface{}, map[string]map[string]interface{}, er
 	}
 
 	for _, query := range jmxPatterns {
-		results, err := jmx.Query(query)
+		results, err := jmx.Query(query, args.Timeout)
 		if err != nil {
 			return nil, nil, err
 		}

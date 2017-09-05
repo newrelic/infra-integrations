@@ -1,3 +1,7 @@
+/*
+Package jmx is a library to get metrics through JMX. It requires additional
+setup. Read https://github.com/newrelic/infra-integrations-sdk#jmx-support for
+instructions. */
 package jmx
 
 import (
@@ -23,8 +27,7 @@ var done sync.WaitGroup
 var jmxCommand = "/usr/bin/nrjmx"
 
 const (
-	outTimeout    time.Duration = 1000 * time.Millisecond
-	jmxLineBuffer               = 4 * 1024 * 1024 // Max 4MB per line. If single lines are outputting more JSON than that, we likely need smaller-scoped JMX queries
+	jmxLineBuffer = 4 * 1024 * 1024 // Max 4MB per line. If single lines are outputting more JSON than that, we likely need smaller-scoped JMX queries
 )
 
 func getCommand(hostname, port, username, password string) []string {
@@ -36,10 +39,10 @@ func getCommand(hostname, port, username, password string) []string {
 		cliCommand = []string{jmxCommand}
 	}
 
-	cliCommand = append(
-		cliCommand, "--hostname", hostname, "--port", port,
-		"--username", username, "--password", password,
-	)
+	cliCommand = append(cliCommand, "--hostname", hostname, "--port", port)
+	if username != "" && password != "" {
+		cliCommand = append(cliCommand, "--username", username, "--password", password)
+	}
 
 	return cliCommand
 }
@@ -119,12 +122,13 @@ func doQuery(out chan []byte, errorChan chan error, queryString []byte) {
 	}
 }
 
-// Query returns a map with the attribute names and its values from the nrjmx tool
-func Query(objectPattern string) (map[string]interface{}, error) {
+// Query executes JMX query against nrjmx tool waiting up to timeout (in milliseconds)
+// and returns a map with the result.
+func Query(objectPattern string, timeout int) (map[string]interface{}, error) {
 	result := make(map[string]interface{})
 	pipe := make(chan []byte)
 	queryErrors := make(chan error)
-
+	outTimeout := time.Duration(timeout) * time.Millisecond
 	// Send the query async to the underlying process so we can timeout it
 	go doQuery(pipe, queryErrors, []byte(fmt.Sprintf("%s\n", objectPattern)))
 

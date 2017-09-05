@@ -17,6 +17,7 @@ type argumentList struct {
 	Username   string `default:"" help:"Username for accessing JMX."`
 	Password   string `default:"" help:"Password for the given user."`
 	ConfigPath string `default:"/etc/cassandra.yaml" help:"Cassandra configuration file."`
+	Timeout    int    `default:"2000" help:"Timeout in milliseconds per single JMX query."`
 }
 
 const (
