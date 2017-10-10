@@ -39,6 +39,7 @@ func getRawData(db dataSource) (map[string]interface{}, map[string]interface{}, 
 	if err != nil {
 		return nil, nil, err
 	}
+
 	replication, err := db.query(replicaQuery)
 	if err != nil {
 		log.Warn("Can't get node type, not enough privileges (must grant REPLICATION CLIENT)")
@@ -46,9 +47,12 @@ func getRawData(db dataSource) (map[string]interface{}, map[string]interface{}, 
 		metrics["node_type"] = "master"
 	} else {
 		metrics["node_type"] = "slave"
+
+		for key := range replication {
+			metrics[key] = replication[key]
+		}
 	}
 
-	// Set needed values for computed metrics from inventory
 	metrics["key_cache_block_size"] = inventory["key_cache_block_size"]
 	metrics["key_buffer_size"] = inventory["key_buffer_size"]
 	metrics["version_comment"] = inventory["version_comment"]
@@ -89,6 +93,8 @@ func populatePartialMetrics(sample *metric.MetricSet, metrics map[string]interfa
 			rawMetric, ok = metrics[source]
 		case func(map[string]interface{}) (float64, bool):
 			rawMetric, ok = source(metrics)
+		case func(map[string]interface{}) (int, bool):
+			rawMetric, ok = source(metrics)
 		default:
 			log.Warn("Invalid raw source metric for %s", metricName)
 			continue
@@ -99,6 +105,11 @@ func populatePartialMetrics(sample *metric.MetricSet, metrics map[string]interfa
 			continue
 		}
 
-		sample.SetMetric(metricName, rawMetric, metricType)
+		err := sample.SetMetric(metricName, rawMetric, metricType)
+
+		if err != nil {
+			log.Warn("Error setting value: %s", err)
+			continue
+		}
 	}
 }

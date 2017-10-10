@@ -31,7 +31,7 @@ func (db *database) close() {
 	db.source.Close()
 }
 
-// query function executes provided as an argument query and parses the output to the map structure.
+// query executes provided as an argument query and parses the output to the map structure.
 // It is only possible to parse two types of query:
 // 1. output of the query consists of two columns. Names of the columns are ignored. Values from the first
 // column are used as keys, and from the second as corresponding values of the map. Number of rows can be greater than 1;
