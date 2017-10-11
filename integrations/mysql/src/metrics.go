@@ -47,6 +47,7 @@ var defaultMetrics = map[string][]interface{}{
 	"software.edition":                            {"version_comment", metric.ATTRIBUTE},
 	"software.version":                            {"version", metric.ATTRIBUTE},
 	"cluster.nodeType":                            {"node_type", metric.ATTRIBUTE},
+	"cluster.slaveRunning":                        {slaveRunningAsNumber, metric.GAUGE},
 }
 
 func qCacheUtilization(metrics map[string]interface{}) (float64, bool) {
@@ -70,6 +71,16 @@ func qCacheHitRatio(metrics map[string]interface{}) (float64, bool) {
 		return 0, true
 	} else if ok1 && ok2 {
 		return float64(qCacheHits) / float64(queries), true
+	}
+	return 0, false
+}
+
+func slaveRunningAsNumber(metrics map[string]interface{}) (int, bool) {
+	slaveRunning, ok := metrics["Slave_running"].(string)
+	if ok && slaveRunning == "ON" {
+		return 1, true
+	} else if ok && slaveRunning == "OFF" {
+		return 0, true
 	}
 	return 0, false
 }
@@ -106,6 +117,18 @@ var extendedMetrics = map[string][]interface{}{
 	"db.threadsCached":                     {"Threads_cached", metric.GAUGE},
 	"db.threadsCreatedPerSecond":           {"Threads_created", metric.RATE},
 	"db.threadCacheMissRate":               {threadCacheMissRate, metric.GAUGE},
+	"db.relayLogSpace":                     {"Relay_Log_Space", metric.GAUGE},
+	"cluster.secondsBehindMaster":          {"Seconds_Behind_Master", metric.GAUGE},
+	"cluster.slaveIORunning":               {"Slave_IO_Running", metric.ATTRIBUTE},
+	"cluster.slaveSQLRunning":              {"Slave_SQL_Running", metric.ATTRIBUTE},
+	"cluster.lastIOErrno":                  {"Last_IO_Errno", metric.GAUGE},
+	"cluster.lastIOError":                  {"Last_IO_Error", metric.ATTRIBUTE},
+	"cluster.lastSQLErrno":                 {"Last_SQL_Errno", metric.GAUGE},
+	"cluster.lastSQLError":                 {"Last_SQL_Error", metric.ATTRIBUTE},
+	"cluster.masterLogFile":                {"Master_Log_File", metric.ATTRIBUTE},
+	"cluster.readMasterLogPos":             {"Read_Master_Log_Pos", metric.GAUGE},
+	"cluster.relayMasterLogFile":           {"Relay_Master_Log_File", metric.ATTRIBUTE},
+	"cluster.execMasterLogPos":             {"Exec_Master_Log_Pos", metric.GAUGE},
 }
 
 func threadCacheMissRate(metrics map[string]interface{}) (float64, bool) {

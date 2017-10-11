@@ -10,7 +10,7 @@ import (
 
 const (
 	integrationName    = "com.newrelic.mysql"
-	integrationVersion = "1.0.0"
+	integrationVersion = "1.1.0"
 )
 
 type argumentList struct {
