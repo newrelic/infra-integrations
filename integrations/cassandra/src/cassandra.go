@@ -12,12 +12,13 @@ import (
 type argumentList struct {
 	sdk_args.DefaultArgumentList
 
-	Hostname   string `default:"localhost" help:"Hostname or IP where Cassandra is running."`
-	Port       int    `default:"7199" help:"Port on which JMX server is listening."`
-	Username   string `default:"" help:"Username for accessing JMX."`
-	Password   string `default:"" help:"Password for the given user."`
-	ConfigPath string `default:"/etc/cassandra.yaml" help:"Cassandra configuration file."`
-	Timeout    int    `default:"2000" help:"Timeout in milliseconds per single JMX query."`
+	Hostname            string `default:"localhost" help:"Hostname or IP where Cassandra is running."`
+	Port                int    `default:"7199" help:"Port on which JMX server is listening."`
+	Username            string `default:"" help:"Username for accessing JMX."`
+	Password            string `default:"" help:"Password for the given user."`
+	ConfigPath          string `default:"/etc/cassandra.yaml" help:"Cassandra configuration file."`
+	Timeout             int    `default:"2000" help:"Timeout in milliseconds per single JMX query."`
+	ColumnFamiliesLimit int    `default:"20" help:"Limit on number of Cassandra Column Families."`
 }
 
 const (
