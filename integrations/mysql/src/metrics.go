@@ -117,18 +117,6 @@ var extendedMetrics = map[string][]interface{}{
 	"db.threadsCached":                     {"Threads_cached", metric.GAUGE},
 	"db.threadsCreatedPerSecond":           {"Threads_created", metric.RATE},
 	"db.threadCacheMissRate":               {threadCacheMissRate, metric.GAUGE},
-	"db.relayLogSpace":                     {"Relay_Log_Space", metric.GAUGE},
-	"cluster.secondsBehindMaster":          {"Seconds_Behind_Master", metric.GAUGE},
-	"cluster.slaveIORunning":               {"Slave_IO_Running", metric.ATTRIBUTE},
-	"cluster.slaveSQLRunning":              {"Slave_SQL_Running", metric.ATTRIBUTE},
-	"cluster.lastIOErrno":                  {"Last_IO_Errno", metric.GAUGE},
-	"cluster.lastIOError":                  {"Last_IO_Error", metric.ATTRIBUTE},
-	"cluster.lastSQLErrno":                 {"Last_SQL_Errno", metric.GAUGE},
-	"cluster.lastSQLError":                 {"Last_SQL_Error", metric.ATTRIBUTE},
-	"cluster.masterLogFile":                {"Master_Log_File", metric.ATTRIBUTE},
-	"cluster.readMasterLogPos":             {"Read_Master_Log_Pos", metric.GAUGE},
-	"cluster.relayMasterLogFile":           {"Relay_Master_Log_File", metric.ATTRIBUTE},
-	"cluster.execMasterLogPos":             {"Exec_Master_Log_Pos", metric.GAUGE},
 }
 
 func threadCacheMissRate(metrics map[string]interface{}) (float64, bool) {
@@ -142,6 +130,21 @@ func threadCacheMissRate(metrics map[string]interface{}) (float64, bool) {
 		return float64(threadsCreated) / float64(connections), true
 	}
 	return 0, false
+}
+
+var slaveMetrics = map[string][]interface{}{
+	"cluster.secondsBehindMaster": {"Seconds_Behind_Master", metric.GAUGE},
+	"cluster.slaveIORunning":      {"Slave_IO_Running", metric.ATTRIBUTE},
+	"cluster.slaveSQLRunning":     {"Slave_SQL_Running", metric.ATTRIBUTE},
+	"cluster.lastIOErrno":         {"Last_IO_Errno", metric.GAUGE},
+	"cluster.lastIOError":         {"Last_IO_Error", metric.ATTRIBUTE},
+	"cluster.lastSQLErrno":        {"Last_SQL_Errno", metric.GAUGE},
+	"cluster.lastSQLError":        {"Last_SQL_Error", metric.ATTRIBUTE},
+	"cluster.masterLogFile":       {"Master_Log_File", metric.ATTRIBUTE},
+	"cluster.readMasterLogPos":    {"Read_Master_Log_Pos", metric.GAUGE},
+	"cluster.relayMasterLogFile":  {"Relay_Master_Log_File", metric.ATTRIBUTE},
+	"cluster.execMasterLogPos":    {"Exec_Master_Log_Pos", metric.GAUGE},
+	"db.relayLogSpace":            {"Relay_Log_Space", metric.GAUGE},
 }
 
 var innodbMetrics = map[string][]interface{}{
