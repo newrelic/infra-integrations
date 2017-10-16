@@ -47,7 +47,8 @@ var defaultMetrics = map[string][]interface{}{
 	"software.edition":                            {"version_comment", metric.ATTRIBUTE},
 	"software.version":                            {"version", metric.ATTRIBUTE},
 	"cluster.nodeType":                            {"node_type", metric.ATTRIBUTE},
-	"cluster.slaveRunning":                        {slaveRunningAsNumber, metric.GAUGE},
+	// If a cluster instance is not a slave, then the metric cluster.slaveRunning will be removed.
+	"cluster.slaveRunning": {slaveRunningAsNumber, metric.GAUGE},
 }
 
 func qCacheUtilization(metrics map[string]interface{}) (float64, bool) {

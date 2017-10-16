@@ -68,7 +68,7 @@ func populateInventory(inventory sdk.Inventory, rawData map[string]interface{}) 
 }
 
 func populateMetrics(sample *metric.MetricSet, rawMetrics map[string]interface{}) {
-	if rawMetrics["node_type"] == "master" {
+	if rawMetrics["node_type"] != "slave" {
 		delete(defaultMetrics, "cluster.slaveRunning")
 	}
 	populatePartialMetrics(sample, rawMetrics, defaultMetrics)
