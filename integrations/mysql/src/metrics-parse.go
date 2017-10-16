@@ -68,8 +68,17 @@ func populateInventory(inventory sdk.Inventory, rawData map[string]interface{}) 
 }
 
 func populateMetrics(sample *metric.MetricSet, rawMetrics map[string]interface{}) {
+	if rawMetrics["node_type"] == "master" {
+		delete(defaultMetrics, "cluster.slaveRunning")
+	}
 	populatePartialMetrics(sample, rawMetrics, defaultMetrics)
+
 	if args.ExtendedMetrics {
+		if rawMetrics["node_type"] == "slave" {
+			for key := range slaveMetrics {
+				extendedMetrics[key] = slaveMetrics[key]
+			}
+		}
 		populatePartialMetrics(sample, rawMetrics, extendedMetrics)
 	}
 	if args.ExtendedInnodbMetrics {
