@@ -8,8 +8,6 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/metric"
 )
 
-const columnFamiliesLimit = 20
-
 // getMetrics will gather all node and keyspace level metrics and return them as two maps
 // The main metrics map will contain all the keys got from JMX and the keyspace metrics map
 // Will contain maps for each <keyspace>.<columnFamily> found while inspecting JMX metrics.
@@ -51,7 +49,7 @@ func getMetrics() (map[string]interface{}, map[string]map[string]interface{}, er
 				if !found {
 					_, found := visitedColumnFamilies[eventkey]
 					if !found {
-						if len(visitedColumnFamilies) < columnFamiliesLimit {
+						if len(visitedColumnFamilies) < args.ColumnFamiliesLimit {
 							visitedColumnFamilies[eventkey] = struct{}{}
 						} else {
 							continue
