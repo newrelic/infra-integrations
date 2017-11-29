@@ -1,0 +1,15 @@
+integration_name: com.newrelic.apache
+
+instances:
+    - name: apache-server-metrics
+      command: metrics
+      arguments:
+          status_url: http://127.0.0.1/server-status?auto
+      labels:
+          env: production
+          role: load_balancer
+    - name: apache-server-inventory
+      command: inventory
+      labels:
+          env: production
+          role: load_balancer
