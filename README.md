@@ -27,22 +27,18 @@ and avoid breaking your code with future changes to the agent.
 
 ## Official Integrations
 
-Currently the set of official integrations includes three services, to find more
+Currently the set of official integrations includes five services, to find more
 information about each one of them, how to configure and use them with New Relic,
 refer to their documentation pages or the README included by each of them:
 
-* Cassandra:
-  - [docs site](https://docs.newrelic.com/docs/cassandra-integration-new-relic-infrastructure)
-  - [README.md](integrations/cassandra/README.md)
 
-* MySQL:
-  - [docs site](https://docs.newrelic.com/docs/mysql-integration-new-relic-infrastructure)
-  - [README.md](integrations/mysql/README.md)
-
-* NGINX:
-  - [docs site](https://docs.newrelic.com/docs/nginx-integration-new-relic-infrastructure)
-  - [README.md](integrations/nginx/README.md)
-
+| Integration 	| Documentation 																		| Readme  |
+| ------------- |:-------------:																		| -----:|
+| Cassandra 	| [doc](https://docs.newrelic.com/docs/cassandra-integration-new-relic-infrastructure) 	| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/cassandra/README.md) |
+| MySQL 		| [doc](https://docs.newrelic.com/docs/mysql-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/mysql/README.md) |
+| NGINX 		| [doc](https://docs.newrelic.com/docs/nginx-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/nginx/README.md) |
+| Redis 		| [doc](https://docs.newrelic.com/docs/redis-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/redis/README.md) |
+| Apache 		| [doc](https://docs.newrelic.com/docs/apache-integration-new-relic-infrastructure) 	| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/apache/README.md) | 
 
 ## Custom Integrations
 
