@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
 	"github.com/newrelic/infra-integrations-sdk/metric"
 )
 

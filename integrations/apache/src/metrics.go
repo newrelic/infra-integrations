@@ -15,7 +15,7 @@ import (
 
 const (
 	headerContentType = "Content-Type"
-	expectedMimeType = "text/plain"
+	expectedMimeType  = "text/plain"
 )
 
 var metricsDefinition = map[string][]interface{}{
