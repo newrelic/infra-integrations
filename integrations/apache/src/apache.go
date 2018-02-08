@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	sdk_args "github.com/newrelic/infra-integrations-sdk/args"
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/infra-integrations-sdk/sdk"
@@ -8,12 +10,16 @@ import (
 
 type argumentList struct {
 	sdk_args.DefaultArgumentList
-	StatusURL string `default:"http://127.0.0.1/server-status?auto" help:"Apache status-server URL."`
+	StatusURL    string `default:"http://127.0.0.1/server-status?auto" help:"Apache status-server URL."`
+	CABundleFile string `help:"Alternative Certificate Authority bundle file"`
+	CABundleDir  string `help:"Alternative Certificate Authority bundle directory"`
 }
 
 const (
 	integrationName    = "com.newrelic.apache"
-	integrationVersion = "1.0.0"
+	integrationVersion = "1.1.0"
+
+	defaultHTTPTimeout = time.Second * 1
 )
 
 var args argumentList
@@ -33,7 +39,12 @@ func main() {
 	if args.All || args.Metrics {
 		log.Debug("Fetching data for '%s' integration", integrationName+"-metrics")
 		ms := integration.NewMetricSet("ApacheSample")
-		fatalIfErr(getMetricsData(ms))
+		provider := &Status{
+			CABundleDir:  args.CABundleDir,
+			CABundleFile: args.CABundleFile,
+			HTTPTimeout:  defaultHTTPTimeout,
+		}
+		fatalIfErr(getMetricsData(provider, ms))
 	}
 
 	fatalIfErr(integration.Publish())
