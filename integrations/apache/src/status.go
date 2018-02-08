@@ -11,12 +11,12 @@ import (
 
 // Status will create new HTTP clients based on its configuration
 type Status struct {
-	CACertFile  string
-	CACertDir   string
-	HTTPTimeout time.Duration
+	CABundleFile string
+	CABundleDir  string
+	HTTPTimeout  time.Duration
 }
 
 // NewClient creates a new http.Client based on the provider's configuration
 func (p Status) NewClient() *http.Client {
-	return svccommon_http_client.GetHttpClient(p.CACertFile, p.CACertDir, p.HTTPTimeout)
+	return svccommon_http_client.GetHttpClient(p.CABundleFile, p.CABundleDir, p.HTTPTimeout)
 }

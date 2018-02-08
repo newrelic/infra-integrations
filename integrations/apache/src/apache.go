@@ -10,9 +10,9 @@ import (
 
 type argumentList struct {
 	sdk_args.DefaultArgumentList
-	StatusURL  string `default:"http://127.0.0.1/server-status?auto" help:"Apache status-server URL."`
-	CACertFile string `default:"" help:"Apache server alternative Certificate Authority certificate file"`
-	CACertDir  string `default:"" help:"Apache server alternative Certificate Authority certificate directory"`
+	StatusURL    string `default:"http://127.0.0.1/server-status?auto" help:"Apache status-server URL."`
+	CABundleFile string `default:"" help:"Alternative Certificate Authority bundle file"`
+	CABundleDir  string `default:"" help:"Alternative Certificate Authority bundle directory"`
 }
 
 const (
@@ -40,9 +40,9 @@ func main() {
 		log.Debug("Fetching data for '%s' integration", integrationName+"-metrics")
 		ms := integration.NewMetricSet("ApacheSample")
 		provider := &Status{
-			CACertDir:   args.CACertDir,
-			CACertFile:  args.CACertFile,
-			HTTPTimeout: defaultHTTPTimeout,
+			CABundleDir:  args.CABundleDir,
+			CABundleFile: args.CABundleFile,
+			HTTPTimeout:  defaultHTTPTimeout,
 		}
 		fatalIfErr(getMetricsData(provider, ms))
 	}
