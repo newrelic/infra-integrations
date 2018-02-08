@@ -27,15 +27,15 @@ http://127.0.0.1/server-status?auto
 You can change this URL by modifying the `status_url` instance parameter of your `apache-config.yml` file.
 
 If the `/server-status` is reachable only though an HTTPS connection which uses a certificate that is signed by your own
-Certificate Authority (e.g. for internal use or development purposes), you will need to make sure one of the next actions
-have been taken:
+Certificate Authority (e.g. for internal use or development purposes), you will need to make sure **one** of the next alternative
+actions have been taken:
 
-* Install your Certificate Authority in your host. The Apache integration will look for it by default in the host's root
+* *Option 1*: Install your Certificate Authority in your host. The Apache integration will look for it by default in the host's root
   bundle for Certificate Authorities.
-* Update the `apache-config.yml` to have at leastone of the next instance parameters configured: `ca_bundle_file` or
+* *Option 2*: Update the `apache-config.yml` to have at least one of the next instance parameters configured: `ca_bundle_file` or
   `ca_bundle_dir`, whose values must be, respectively, the absolute paths to your alternative Certificate Authorities' bundle
-  file (or the directory where they are).
-* Add to the [Infrastructure Agent configuration file](https://docs.newrelic.com/docs/infrastructure/new-relic-infrastructure/configuration/configure-infrastructure-agent))
+  file (or the directory where they are). 
+* *Option 3*: Add to the [Infrastructure Agent configuration file](https://docs.newrelic.com/docs/infrastructure/new-relic-infrastructure/configuration/configure-infrastructure-agent))
   the `ca_bundle_file` or `ca_bundle_dir` property (which are analogue to the properties explained in the previous
   bullet), and then passthrough them to the integrations by adding: `passthrough_environment: CA_BUNDLE_FILE` or
   `passthrough_environment: CA_BUNDLE_DIR` to the `infra-agent.yml` configuration file. 

@@ -11,8 +11,8 @@ import (
 type argumentList struct {
 	sdk_args.DefaultArgumentList
 	StatusURL    string `default:"http://127.0.0.1/server-status?auto" help:"Apache status-server URL."`
-	CABundleFile string `default:"" help:"Alternative Certificate Authority bundle file"`
-	CABundleDir  string `default:"" help:"Alternative Certificate Authority bundle directory"`
+	CABundleFile string `help:"Alternative Certificate Authority bundle file"`
+	CABundleDir  string `help:"Alternative Certificate Authority bundle directory"`
 }
 
 const (
