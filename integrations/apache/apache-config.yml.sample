@@ -5,6 +5,7 @@ instances:
       command: metrics
       arguments:
           status_url: http://127.0.0.1/server-status?auto
+          ca_cert_dir: /etc/ssl/certs
       labels:
           env: production
           role: load_balancer

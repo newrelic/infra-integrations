@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/infra-integrations-sdk/metric"
@@ -150,11 +149,9 @@ func getRawMetrics(reader *bufio.Reader) (map[string]interface{}, error) {
 	return metrics, nil
 }
 
-func getMetricsData(sample *metric.MetricSet) error {
-	// TODO: externalize client instantiation so we can mock it for accurate unit testing
-	netClient := &http.Client{
-		Timeout: time.Second * 1,
-	}
+func getMetricsData(status *Status, sample *metric.MetricSet) error {
+	netClient := status.NewClient()
+
 	log.Debug("retrieving Apache Status from %s", args.StatusURL)
 	resp, err := netClient.Get(args.StatusURL)
 	if err != nil {
