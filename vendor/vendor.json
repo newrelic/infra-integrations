@@ -87,12 +87,6 @@
 			"versionExact": "v2.0.0"
 		},
 		{
-			"checksumSHA1": "UKc8Cy7ubIr49WkrZXasS94V75I=",
-			"path": "go.datanerd.us/p/meatballs/backend/shared/svccommon/http/client",
-			"revision": "62a731dbb2617715ec218bfc85a76beecfc716bb",
-			"revisionTime": "2018-01-20T00:25:19Z"
-		},
-		{
 			"checksumSHA1": "Dbw6GrXllNPecT0AnoOyAiv66EI=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "9c9d83fe39ed3fd2d9249fcf6b755891fff54b03",
