@@ -13,12 +13,12 @@ import (
 // Will contain maps for each <keyspace>.<columnFamily> found while inspecting JMX metrics.
 func getMetrics() (map[string]interface{}, map[string]map[string]interface{}, error) {
 	internalKeyspaces := map[string]struct{}{
-		"OpsCenter":          struct{}{},
-		"system":             struct{}{},
-		"system_auth":        struct{}{},
-		"system_distributed": struct{}{},
-		"system_schema":      struct{}{},
-		"system_traces":      struct{}{},
+		"OpsCenter":          {},
+		"system":             {},
+		"system_auth":        {},
+		"system_distributed": {},
+		"system_schema":      {},
+		"system_traces":      {},
 	}
 	metrics := make(map[string]interface{})
 	columnFamilyMetrics := make(map[string]map[string]interface{})

@@ -344,8 +344,8 @@ func TestParseKeyspaceMetricsNoMatch(t *testing.T) {
 func TestGetDbAndKeys(t *testing.T) {
 	keysFlag := sdkArgs.NewJSON(map[string]interface{}{"0": []interface{}{"key1"}, "2": []interface{}{"key2", "key3"}})
 	expectedValue := map[string][]string{
-		"0": []string{"key1"},
-		"2": []string{"key2", "key3"},
+		"0": {"key1"},
+		"2": {"key2", "key3"},
 	}
 
 	databaseKey := getDbAndKeys(*keysFlag)
@@ -357,7 +357,7 @@ func TestGetDbAndKeys(t *testing.T) {
 func TestGetDbAndKeysDb0(t *testing.T) {
 	keysFlag := sdkArgs.NewJSON([]interface{}{"key1", "key2"})
 	expectedValue := map[string][]string{
-		"0": []string{"key1", "key2"},
+		"0": {"key1", "key2"},
 	}
 	databaseKey := getDbAndKeys(*keysFlag)
 	if !reflect.DeepEqual(databaseKey, expectedValue) {
@@ -396,7 +396,7 @@ func TestRemoveDuplicatesNoDuplicates(t *testing.T) {
 
 func TestValidateKeysFlag(t *testing.T) {
 	databaseKeys := map[string][]string{
-		"0": []string{"key1", "key2", "key3"},
+		"0": {"key1", "key2", "key3"},
 	}
 	keysLimit := 3
 	expectedKeysNumber := 3
@@ -412,7 +412,7 @@ func TestValidateKeysFlag(t *testing.T) {
 
 func TestValidateKeysFlagExceedLimit(t *testing.T) {
 	databaseKeys := map[string][]string{
-		"0": []string{"key1", "key2", "key3"},
+		"0": {"key1", "key2", "key3"},
 	}
 	keysLimit := 2
 	expectedKeysNumber := 3
@@ -429,8 +429,8 @@ func TestValidateKeysFlagExceedLimit(t *testing.T) {
 
 func TestPopulateCustomKeysMetric(t *testing.T) {
 	rawCustomKeys := map[string]keyInfo{
-		"myhash": keyInfo{keyLength: 1, keyType: "hash"},
-		"mylist": keyInfo{keyLength: 5, keyType: "list"},
+		"myhash": {keyLength: 1, keyType: "hash"},
+		"mylist": {keyLength: 5, keyType: "list"},
 	}
 	expectedHashKeyName := "db.keyLength.hash.myhash"
 	expectedListKeyName := "db.keyLength.list.mylist"
