@@ -55,12 +55,12 @@
 			"versionExact": "v2.0.0"
 		},
 		{
-			"checksumSHA1": "0EEXgZ9Fn+YXKhVEcRUI/4bydmQ=",
+			"checksumSHA1": "Ka2UxyWz+kOAwZ9slXb0bfWlLSI=",
 			"path": "github.com/newrelic/infra-integrations-sdk/jmx",
-			"revision": "baf70b67539dc2821d60b5810639b6bc188b86f8",
-			"revisionTime": "2017-10-11T10:26:32Z",
-			"version": "v2.0.0",
-			"versionExact": "v2.0.0"
+			"revision": "6d2cc5624d1a5b2f06588957d1389bd633225c0a",
+			"revisionTime": "2018-05-04T09:18:16Z",
+			"version": "fixJmxRaces",
+			"versionExact": "fixJmxRaces"
 		},
 		{
 			"checksumSHA1": "gRz6v46pNwphQXmd9rSP05I7cHo=",
