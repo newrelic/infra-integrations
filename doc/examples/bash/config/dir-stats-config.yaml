@@ -4,4 +4,4 @@ instances:
   - name: Instance 1
     command: dir-stats
     arguments:
-      dir_names: "/tmp,/var" # string values separated by comma
+      dir_names: "/home,/var" # string values separated by comma

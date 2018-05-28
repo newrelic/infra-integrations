@@ -45,7 +45,9 @@ Infrastructure service restarted
 
 You will see new attributes in  `DirectorySample` called `dirName`, `dirSize` and `fileCount`.
 
+> dirNames should be available on this query once the agent supports entity-names for remote-entities.
+
 Example query used:
 ```
-SELECT average(dirSize) FROM DirectorySample FACET dirNames TIMESERIES
+SELECT dirSize, fileCount FROM DirectorySample SINCE 15 minutes ago
 ```
