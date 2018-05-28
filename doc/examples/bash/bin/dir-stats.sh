@@ -31,17 +31,30 @@ for dirName in "${directories[@]}"; do
     # Get the directory size, (note that cut breaks off the first field)
     dirSize=`du "${dirName}" -b -s | cut -f1`
 
+    subfolders=($(find ${dirName}  -maxdepth 1 -type d ))
 
-    # 3. Entity template evaluation:
 
-    # Read in the JSON template
+    # 3. Serialize to JSON:
+
+    # Entity template evaluation
     jsonEntity=`cat ./template/entity.json`
+
+    jsonSubdirs="{"
+    for subfolder in "${subfolders[@]}"; do
+        separator=""
+        if [ "${jsonSubdirs}" != "{" ]; then
+            separator=","
+        fi
+        jsonSubdirs="$jsonSubdirs$separator \"$subfolder\": true"
+    done
+    jsonSubdirs="$jsonSubdirs }"
 
     # Replace the values in the JSON
     # The @ in the sed command is a delimiter
     jsonEntity=`echo ${jsonEntity} | sed -e "s@DIR_NAME@${dirName}@"`
     jsonEntity=`echo ${jsonEntity} | sed -e "s@FILE_COUNT@${fileCount}@"`
     jsonEntity=`echo ${jsonEntity} | sed -e "s@DIR_SIZE@${dirSize}@"`
+    jsonEntity=`echo ${jsonEntity} | sed -e "s@SUBFOLDERS@${jsonSubdirs}@"`
 
     separator=""
     entityCount=${entityCount}+1

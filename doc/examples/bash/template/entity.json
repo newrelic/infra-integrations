@@ -9,5 +9,8 @@
 					"fileCount": FILE_COUNT,
 					"dirSize": DIR_SIZE
 				}
-			]
+			],
+			"inventory": {
+				"subfolders": SUBFOLDERS
+			}
 		}
