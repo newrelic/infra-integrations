@@ -1,0 +1,11 @@
+name: com.myorg.dir-stats
+protocol_version: 1
+description: dir-stats on host integration example using remote entities
+os: linux
+
+commands:
+  dir-stats:
+    command:
+      - ./bin/dir-stats.sh
+    interval: 30
+    prefix: integration/myorg/dir-stats
