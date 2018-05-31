@@ -24,7 +24,7 @@ _testmain.go
 *.prof
 *.DS_STORE
 
-bin/
+/integrations/*/bin/
 coverage.xml
 target/
 # Vim swap

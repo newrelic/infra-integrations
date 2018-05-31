@@ -1,0 +1,16 @@
+		{
+			"entity": {
+				"name": "DIR_NAME",
+				"type": "directory"
+			},
+			"metrics": [
+				{
+					"event_type": "DirectorySample",
+					"fileCount": FILE_COUNT,
+					"dirSize": DIR_SIZE
+				}
+			],
+			"inventory": {
+				"subfolders": SUBFOLDERS
+			}
+		}
