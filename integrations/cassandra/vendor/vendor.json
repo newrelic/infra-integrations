@@ -1,0 +1,63 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "nW9vfRK+2x+DkbG39uSmI/WJooc=",
+			"path": "github.com/newrelic/infra-integrations-sdk/args",
+			"revision": "75643537def5cad61b5966440fd80b61609c68e3",
+			"revisionTime": "2018-05-02T09:26:36Z"
+		},
+		{
+			"checksumSHA1": "/OBil2T0jjmaRvLhTCsMXLVG2N4=",
+			"path": "github.com/newrelic/infra-integrations-sdk/data/inventory",
+			"revision": "baf70b67539dc2821d60b5810639b6bc188b86f8",
+			"revisionTime": "2017-10-11T10:26:32Z"
+		},
+		{
+			"checksumSHA1": "ix5/21cCIOuGcF1FCYwmAyW4VEs=",
+			"path": "github.com/newrelic/infra-integrations-sdk/data/metric",
+			"revision": "a54e99b443869b337491193b29ffb470dc7b51a6",
+			"revisionTime": "2018-06-06T14:01:44Z",
+			"version": "cache-collision",
+			"versionExact": "cache-collision"
+		},
+		{
+			"checksumSHA1": "VorxNshE8dikg0M7bOHfUTzupfI=",
+			"path": "github.com/newrelic/infra-integrations-sdk/integration",
+			"revision": "baf70b67539dc2821d60b5810639b6bc188b86f8",
+			"revisionTime": "2017-10-11T10:26:32Z"
+		},
+		{
+			"checksumSHA1": "DG6I5MI54MeH0EH6xVk9JyX+Kjk=",
+			"path": "github.com/newrelic/infra-integrations-sdk/log",
+			"revision": "e8744b1d15848c6aeb036d8c56411e6e19ea785f",
+			"revisionTime": "2018-06-04T08:48:20Z"
+		},
+		{
+			"checksumSHA1": "1GwNtXemXjLvk9s5ko2phxYZaVQ=",
+			"path": "github.com/newrelic/infra-integrations-sdk/persist",
+			"revision": "e8744b1d15848c6aeb036d8c56411e6e19ea785f",
+			"revisionTime": "2018-06-04T08:48:20Z"
+		},
+		{
+			"checksumSHA1": "ljd3FhYRJ91cLZz3wsH9BQQ2JbA=",
+			"path": "github.com/pkg/errors",
+			"revision": "816c9085562cd7ee03e7f8188a1cfd942858cded",
+			"revisionTime": "2018-03-11T21:45:15Z"
+		},
+		{
+			"checksumSHA1": "6LwXZI7kXm1C0h4Ui0Y52p9uQhk=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
+			"revisionTime": "2018-03-14T08:05:35Z"
+		},
+		{
+			"checksumSHA1": "ZSWoOPUNRr5+3dhkLK3C4cZAQPk=",
+			"path": "gopkg.in/yaml.v2",
+			"revision": "5420a8b6744d3b0345ab293f6fcba19c978f1183",
+			"revisionTime": "2018-03-28T19:50:20Z"
+		}
+	],
+	"rootPath": "github.com/newrelic/infra-integrations/integrations/cassandra"
+}

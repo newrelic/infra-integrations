@@ -4,11 +4,14 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/newrelic/infra-integrations-sdk/metric"
-	"github.com/newrelic/infra-integrations-sdk/sdk"
+	"github.com/newrelic/infra-integrations-sdk/data/inventory"
+	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/infra-integrations-sdk/persist"
+	"github.com/stretchr/testify/assert"
 )
 
-func TestPopulatelMetrics(t *testing.T) {
+func TestPopulateMetrics(t *testing.T) {
 	var rawMetrics = map[string]interface{}{
 		"raw_metric_1": 1,
 		"raw_metric_2": 2,
@@ -28,29 +31,19 @@ func TestPopulatelMetrics(t *testing.T) {
 		"functionSource": {functionSource, metric.GAUGE},
 	}
 
-	var sample = metric.NewMetricSet("eventType")
-	populateMetrics(&sample, rawMetrics, metricDefinition)
+	s, err := metric.NewSet("eventType", persist.NewInMemoryStore())
+	assert.NoError(t, err)
 
-	if sample["rawMetric1"] != 1 {
-		t.Error()
-	}
-	if sample["rawMetric2"] != 2 {
-		t.Error()
-	}
-	if sample["rawMetric3"] != "foo" {
-		t.Error()
-	}
+	populateMetrics(log.Discard, s, rawMetrics, metricDefinition)
 
-	if sample["unknownMetric"] != nil {
-		t.Error()
-	}
-	if sample["badRawSource"] != nil {
-		t.Error()
-	}
-	if sample["functionSource"] != float64(3) {
-		t.Error()
-	}
+	sample := s.Metrics
 
+	assert.Equal(t, 1.0, sample["rawMetric1"])
+	assert.Equal(t, 2.0, sample["rawMetric2"])
+	assert.Equal(t, "foo", sample["rawMetric3"])
+	assert.Nil(t, sample["unknownMetric"])
+	assert.Nil(t, sample["badRawSource"])
+	assert.Equal(t, 3.0, sample["functionSource"])
 }
 
 func TestPopulateInventory(t *testing.T) {
@@ -63,10 +56,10 @@ func TestPopulateInventory(t *testing.T) {
 		"key_6":                 map[interface{}]interface{}{"otherImportantPassword": 54321},
 	}
 
-	inventory := make(sdk.Inventory)
-	populateInventory(inventory, rawInventory)
+	i := inventory.New()
+	populateInventory(i, rawInventory)
 
-	expected := sdk.Inventory{
+	expectedItems := inventory.Items{
 		"key_1":                 map[string]interface{}{"value": 1},
 		"key_2":                 map[string]interface{}{"value": 2},
 		"key_3":                 map[string]interface{}{"value": "foo"},
@@ -75,7 +68,7 @@ func TestPopulateInventory(t *testing.T) {
 		"key_6":                 map[string]interface{}{"otherImportantPassword": "(omitted value)"},
 	}
 
-	if !reflect.DeepEqual(inventory, expected) {
-		t.Errorf("Expected: %v. Actual: %v", expected, inventory)
+	if !reflect.DeepEqual(i.Items(), expectedItems) {
+		t.Errorf("Expected: %v. Actual: %v", expectedItems, i.Items())
 	}
 }

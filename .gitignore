@@ -33,3 +33,6 @@ target/
 
 # Vim session
 Session.vim
+
+/integrations/*/vendor/*
+!/integrations/*/vendor/vendor.json

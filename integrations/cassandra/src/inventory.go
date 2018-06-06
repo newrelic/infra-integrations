@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"regexp"
 
-	yaml "gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v2"
 
-	"github.com/newrelic/infra-integrations-sdk/sdk"
+	"github.com/newrelic/infra-integrations-sdk/data/inventory"
 )
 
 func getInventory() (map[string]interface{}, error) {
@@ -15,16 +15,13 @@ func getInventory() (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	inventory := make(map[string]interface{})
-	err = yaml.Unmarshal(rawYamlFile, &inventory)
-	if err != nil {
-		return nil, err
-	}
+	i := make(map[string]interface{})
+	err = yaml.Unmarshal(rawYamlFile, &i)
 
-	return inventory, nil
+	return i, err
 }
 
-func populateInventory(inventory sdk.Inventory, rawInventory map[string]interface{}) error {
+func populateInventory(i *inventory.Inventory, rawInventory map[string]interface{}) error {
 	for k, v := range rawInventory {
 		switch value := v.(type) {
 		case map[interface{}]interface{}:
@@ -33,23 +30,23 @@ func populateInventory(inventory sdk.Inventory, rawInventory map[string]interfac
 				case []interface{}:
 					//TODO: Do not include lists for now
 				default:
-					setValue(inventory, k, subk.(string), subVal)
+					setValue(i, k, subk.(string), subVal)
 				}
 			}
 		case []interface{}:
 			//TODO: Do not include lists for now
 		default:
-			setValue(inventory, k, "value", value)
+			setValue(i, k, "value", value)
 		}
 	}
 	return nil
 }
 
-func setValue(inventory sdk.Inventory, key string, field string, value interface{}) {
+func setValue(i *inventory.Inventory, key string, field string, value interface{}) {
 	re, _ := regexp.Compile("(?i)password")
 
 	if re.MatchString(key) || re.MatchString(field) {
 		value = "(omitted value)"
 	}
-	inventory.SetItem(key, field, value)
+	i.SetItem(key, field, value)
 }

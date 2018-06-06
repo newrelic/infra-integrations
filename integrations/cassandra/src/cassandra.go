@@ -3,10 +3,12 @@ package main
 import (
 	"strconv"
 
+	"os"
+
 	sdk_args "github.com/newrelic/infra-integrations-sdk/args"
+	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/jmx"
 	"github.com/newrelic/infra-integrations-sdk/log"
-	"github.com/newrelic/infra-integrations-sdk/sdk"
 )
 
 type argumentList struct {
@@ -31,40 +33,52 @@ var (
 )
 
 func main() {
-	integration, err := sdk.NewIntegration(integrationName, integrationVersion, &args)
-	fatalIfErr(err)
-	log.SetupLogging(args.Verbose)
+	i, err := integration.New(integrationName, integrationVersion, integration.Args(&args))
+	if err != nil {
+		panic(err)
+	}
 
-	fatalIfErr(jmx.Open(args.Hostname, strconv.Itoa(args.Port), args.Username, args.Password))
+	e := i.LocalEntity()
+	// we want to use the same logger as the integration
+	l := i.Logger()
+
+	fatalIfErr(l, jmx.Open(args.Hostname, strconv.Itoa(args.Port), args.Username, args.Password))
 	defer jmx.Close()
 
 	if args.All || args.Metrics {
 		rawMetrics, allColumnFamilies, err := getMetrics()
-		fatalIfErr(err)
+		fatalIfErr(l, err)
 
-		ms := integration.NewMetricSet("CassandraSample")
+		s, err := e.NewMetricSet("CassandraSample")
+		fatalIfErr(l, err)
 
-		populateMetrics(ms, rawMetrics, metricsDefinition)
-		populateMetrics(ms, rawMetrics, commonDefinition)
+		populateMetrics(l, s, rawMetrics, metricsDefinition)
+		populateMetrics(l, s, rawMetrics, commonDefinition)
 
 		for _, columnFamilyMetrics := range allColumnFamilies {
-			ms := integration.NewMetricSet("CassandraColumnFamilySample")
-			populateMetrics(ms, columnFamilyMetrics, columnFamilyDefinition)
-			populateMetrics(ms, rawMetrics, commonDefinition)
+			s, err := e.NewMetricSet("CassandraColumnFamilySample")
+			if err != nil {
+				l.Errorf("cannot create metric set: %s", err)
+				continue
+			}
+
+			populateMetrics(l, s, columnFamilyMetrics, columnFamilyDefinition)
+			populateMetrics(l, s, rawMetrics, commonDefinition)
 		}
 	}
 
 	if args.All || args.Inventory {
 		rawInventory, err := getInventory()
-		fatalIfErr(err)
-		populateInventory(integration.Inventory, rawInventory)
+		fatalIfErr(l, err)
+		populateInventory(e.Inventory, rawInventory)
 	}
 
-	fatalIfErr(integration.Publish())
+	fatalIfErr(l, i.Publish())
 }
 
-func fatalIfErr(err error) {
+func fatalIfErr(l log.Logger, err error) {
 	if err != nil {
-		log.Fatal(err)
+		l.Errorf(err.Error())
+		os.Exit(1)
 	}
 }
