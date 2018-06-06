@@ -45,7 +45,7 @@ func main() {
 	fatalIfErr(l, jmx.Open(args.Hostname, strconv.Itoa(args.Port), args.Username, args.Password))
 	defer jmx.Close()
 
-	if args.All || args.Metrics {
+	if args.All() || args.Metrics {
 		rawMetrics, allColumnFamilies, err := getMetrics()
 		fatalIfErr(l, err)
 
@@ -67,7 +67,7 @@ func main() {
 		}
 	}
 
-	if args.All || args.Inventory {
+	if args.All() || args.Inventory {
 		rawInventory, err := getInventory()
 		fatalIfErr(l, err)
 		populateInventory(e.Inventory, rawInventory)
