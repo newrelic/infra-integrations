@@ -70,10 +70,12 @@
 			"revisionTime": "2018-06-06T15:29:34Z"
 		},
 		{
-			"checksumSHA1": "1GwNtXemXjLvk9s5ko2phxYZaVQ=",
+			"checksumSHA1": "2CCMPXGKNK8QQxpBH1WAvqNRDqM=",
 			"path": "github.com/newrelic/infra-integrations-sdk/persist",
-			"revision": "e8744b1d15848c6aeb036d8c56411e6e19ea785f",
-			"revisionTime": "2018-06-04T08:48:20Z"
+			"revision": "d781a1b47811abf7d7d7021d87ea472883b8f238",
+			"revisionTime": "2018-06-07T14:15:54Z",
+			"version": "cache-collision",
+			"versionExact": "cache-collision"
 		},
 		{
 			"checksumSHA1": "ljd3FhYRJ91cLZz3wsH9BQQ2JbA=",
