@@ -49,14 +49,14 @@ func main() {
 		rawMetrics, allColumnFamilies, err := getMetrics()
 		fatalIfErr(l, err)
 
-		s, err := e.NewMetricSet("CassandraSample")
+		s, err := e.NewMetricSet("CassandraSample", metricSetAttributes...)
 		fatalIfErr(l, err)
 
 		populateMetrics(l, s, rawMetrics, metricsDefinition)
 		populateMetrics(l, s, rawMetrics, commonDefinition)
 
 		for _, columnFamilyMetrics := range allColumnFamilies {
-			s, err := e.NewMetricSet("CassandraColumnFamilySample")
+			s, err := e.NewMetricSet("CassandraColumnFamilySample", metricSetAttributes...)
 			if err != nil {
 				l.Errorf("cannot create metric set: %s", err)
 				continue

@@ -34,18 +34,20 @@
 			"revisionTime": "2018-06-04T08:48:20Z"
 		},
 		{
-			"checksumSHA1": "Q0kmpwI79vPMJRtdQEIMZhdn+a0=",
+			"checksumSHA1": "ix5/21cCIOuGcF1FCYwmAyW4VEs=",
 			"path": "github.com/newrelic/infra-integrations-sdk/data/metric",
-			"revision": "e8744b1d15848c6aeb036d8c56411e6e19ea785f",
-			"revisionTime": "2018-06-04T08:48:20Z",
+			"revision": "a54e99b443869b337491193b29ffb470dc7b51a6",
+			"revisionTime": "2018-06-06T14:01:44Z",
 			"version": "cache-collision",
 			"versionExact": "cache-collision"
 		},
 		{
-			"checksumSHA1": "09Ff/aiM5HJfKoW84fZP2TDibvc=",
+			"checksumSHA1": "TBKZF++bCB4ZKEZHaCUUbSOOjn8=",
 			"path": "github.com/newrelic/infra-integrations-sdk/integration",
-			"revision": "e8744b1d15848c6aeb036d8c56411e6e19ea785f",
-			"revisionTime": "2018-06-04T08:48:20Z"
+			"revision": "a54e99b443869b337491193b29ffb470dc7b51a6",
+			"revisionTime": "2018-06-06T14:01:44Z",
+			"version": "cache-collision",
+			"versionExact": "cache-collision"
 		},
 		{
 			"checksumSHA1": "Ka2UxyWz+kOAwZ9slXb0bfWlLSI=",

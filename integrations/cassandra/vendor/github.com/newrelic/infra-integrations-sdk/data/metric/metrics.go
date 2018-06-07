@@ -3,6 +3,7 @@ package metric
 import (
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strconv"
 
 	"github.com/newrelic/infra-integrations-sdk/persist"
@@ -13,6 +14,12 @@ import (
 // package performs some calculations with it. Check below the description for
 // each one.
 type SourceType int
+
+// Attribute represents an attribute metric in key-value pair format.
+type Attribute struct {
+	Key   string
+	Value string
+}
 
 const (
 	// GAUGE is a value that may increase and decrease. It is stored as-is.
@@ -25,27 +32,62 @@ const (
 	ATTRIBUTE SourceType = iota
 )
 
+const (
+	// NSSeparator is the metric namespace separator
+	NSSeparator = "::"
+	// NSAttributeSeparator is the metric attribute key-value separator applied to generate the metric ns.
+	NSAttributeSeparator = "=="
+)
+
+// Errors
+var (
+	ErrNonNumeric        = errors.New("non-numeric value for rate/delta")
+	ErrNoStoreToCalcDiff = errors.New("can't use deltas nor rates without persistent store")
+	ErrTooCloseSamples   = errors.New("samples too close in time, skipping")
+	ErrNegativeDiff      = errors.New("source was reset, skipping")
+)
+
 // Set is the basic structure for storing metrics.
 type Set struct {
-	storer  persist.Storer
-	Metrics map[string]interface{}
+	storer       persist.Storer
+	Metrics      map[string]interface{}
+	nsAttributes []Attribute
 }
 
-// NewSet creates new metrics set.
-func NewSet(eventType string, storer persist.Storer) (*Set, error) {
-	ms := Set{
-		Metrics: map[string]interface{}{},
-		storer:  storer,
+// NewSet creates new metrics set, optionally related to a list of attributes.
+// If related attributes are used, then a new attribute-metric is added per kv-pair.
+func NewSet(eventType string, storer persist.Storer, nsAttributes ...Attribute) (s *Set, err error) {
+	s = &Set{
+		Metrics:      make(map[string]interface{}),
+		storer:       storer,
+		nsAttributes: nsAttributes,
 	}
 
-	err := ms.SetMetric("event_type", eventType, ATTRIBUTE)
+	err = s.SetMetric("event_type", eventType, ATTRIBUTE)
+	if err != nil {
+		return
+	}
 
-	return &ms, err
+	for _, attr := range nsAttributes {
+		err = s.SetMetric(attr.Key, attr.Value, ATTRIBUTE)
+		if err != nil {
+			return
+		}
+	}
+
+	return
 }
 
-// SetMetric adds a metric to the Set object or updates the metric value
-// if the metric already exists, performing a calculation if the SourceType
-// (RATE, DELTA) requires it.
+// Attr creates an attribute aimed to namespace a metric-set.
+func Attr(key string, value string) Attribute {
+	return Attribute{
+		Key:   key,
+		Value: value,
+	}
+}
+
+// SetMetric adds a metric to the Set object or updates the metric value if the metric already exists.
+// It calculates elapsed difference for RATE and DELTA types.
 func (ms *Set) SetMetric(name string, value interface{}, sourceType SourceType) error {
 	var err error
 	var newValue = value
@@ -53,20 +95,12 @@ func (ms *Set) SetMetric(name string, value interface{}, sourceType SourceType) 
 	// Only sample metrics of numeric type
 	switch sourceType {
 	case RATE, DELTA:
-		if ms.storer == nil {
-			// This will only happen if the user explicitly builds the integration invoking 'NoCache' function
-			return fmt.Errorf("integrations built with no-store can't use DELTAs and RATEs")
-		}
-		floatVal, err := castToNumeric(value)
+		newValue, err = ms.elapsedDifference(name, value, sourceType)
 		if err != nil {
-			return fmt.Errorf("non-numeric value for rate/delta metric: %s value: %v", name, value)
-		}
-		newValue, err = ms.sample(name, floatVal, sourceType)
-		if err != nil {
-			return err
+			return errors.Wrapf(err, "cannot calculate elapsed difference for metric: %s value %v", name, value)
 		}
 	case GAUGE:
-		newValue, err = castToNumeric(value)
+		newValue, err = castToFloat(value)
 		if err != nil {
 			return fmt.Errorf("non-numeric value for gauge metric: %s value: %v", name, value)
 		}
@@ -82,44 +116,98 @@ func (ms *Set) SetMetric(name string, value interface{}, sourceType SourceType) 
 	return nil
 }
 
-func castToNumeric(value interface{}) (float64, error) {
+func castToFloat(value interface{}) (float64, error) {
 	return strconv.ParseFloat(fmt.Sprintf("%v", value), 64)
 }
 
-func (ms *Set) sample(name string, floatValue float64, sourceType SourceType) (float64, error) {
-	sampledValue := 0.0
+func (ms *Set) elapsedDifference(name string, absolute interface{}, sourceType SourceType) (elapsed float64, err error) {
+	if ms.storer == nil {
+		err = ErrNoStoreToCalcDiff
+		return
+	}
 
-	// Retrieve the last value and timestamp from Storer
-	var oldval float64
-	oldTime, err := ms.storer.Get(name, &oldval)
+	newValue, err := castToFloat(absolute)
+	if err != nil {
+		err = ErrNonNumeric
+		return
+	}
+
+	// Fetch last value & time
+	var oldValue float64
+	oldTime, err := ms.storer.Get(ms.namespace(name), &oldValue)
+	if err != nil && err != persist.ErrNotFound {
+		return
+	}
+
+	// Store new value & time (no IO flush until Save)
+	newTime := ms.storer.Set(ms.namespace(name), newValue)
+
+	// First value
 	if err == persist.ErrNotFound {
-		oldval = 0
-	} else if err != nil {
-		return sampledValue, errors.Wrapf(err, "sample-key: %s", name)
-	}
-	// And replace it with the new value which we want to keep
-	newTime := ms.storer.Set(name, floatValue)
-
-	if err == nil {
-		duration := newTime - oldTime
-		if duration == 0 {
-			return sampledValue, fmt.Errorf("samples for %s are too close in time, skipping sampling", name)
-		}
-
-		if floatValue-oldval < 0 {
-			return sampledValue, fmt.Errorf("source for %s was reseted, skipping sampling", name)
-		}
-		if sourceType == DELTA {
-			sampledValue = floatValue - oldval
-		} else {
-			sampledValue = (floatValue - oldval) / float64(duration)
-		}
+		return 0, nil
 	}
 
-	return sampledValue, nil
+	// Time constraints
+	duration := newTime - oldTime
+	if duration == 0 {
+		err = ErrTooCloseSamples
+		return
+	}
+
+	elapsed = newValue - oldValue
+	if elapsed < 0 {
+		err = ErrNegativeDiff
+		return
+	}
+
+	if sourceType == RATE {
+		elapsed = elapsed / float64(duration)
+	}
+
+	return
+}
+
+// prefix a metric name with a namespace based on the alphabetical order of the set related attributes.
+func (ms *Set) namespace(metricName string) string {
+	ns := ""
+	separator := ""
+
+	attrs := ms.nsAttributes
+	sort.Sort(Attributes(attrs))
+
+	for _, attr := range attrs {
+		ns = fmt.Sprintf("%s%s%s", ns, separator, attr.Namespace())
+		separator = NSSeparator
+	}
+
+	return fmt.Sprintf("%s%s%s", ns, separator, metricName)
+}
+
+// Namespace generates the string value of an attribute used to namespace a metric.
+func (a *Attribute) Namespace() string {
+	return fmt.Sprintf("%s%s%s", a.Key, NSAttributeSeparator, a.Value)
 }
 
 // MarshalJSON adapts the internal structure of the metrics Set to the payload that is compliant with the protocol
 func (ms Set) MarshalJSON() ([]byte, error) {
 	return json.Marshal(ms.Metrics)
+}
+
+// Required for Go < v.18, as these do not include sort.Slice
+
+// Attributes list of attributes
+type Attributes []Attribute
+
+// Len ...
+func (a Attributes) Len() int { return len(a) }
+
+// Swap ...
+func (a Attributes) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+
+// Less ...
+func (a Attributes) Less(i, j int) bool {
+	if a[i].Key == a[j].Key {
+		return a[i].Value < a[j].Value
+	}
+	return a[i].Key < a[j].Key
 }
