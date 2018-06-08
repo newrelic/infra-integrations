@@ -1,7 +1,6 @@
 package main
 
 import (
-	"reflect"
 	"testing"
 
 	"github.com/newrelic/infra-integrations-sdk/data/inventory"
@@ -68,7 +67,5 @@ func TestPopulateInventory(t *testing.T) {
 		"key_6":                 map[string]interface{}{"otherImportantPassword": "(omitted value)"},
 	}
 
-	if !reflect.DeepEqual(i.Items(), expectedItems) {
-		t.Errorf("Expected: %v. Actual: %v", expectedItems, i.Items())
-	}
+	assert.Equal(t, expectedItems, i.Items())
 }
