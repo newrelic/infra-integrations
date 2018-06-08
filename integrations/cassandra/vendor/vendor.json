@@ -34,18 +34,18 @@
 			"revisionTime": "2018-06-04T08:48:20Z"
 		},
 		{
-			"checksumSHA1": "ix5/21cCIOuGcF1FCYwmAyW4VEs=",
+			"checksumSHA1": "eprDaUXbmhOP8AyKXqsTwPza2Zs=",
 			"path": "github.com/newrelic/infra-integrations-sdk/data/metric",
-			"revision": "a54e99b443869b337491193b29ffb470dc7b51a6",
-			"revisionTime": "2018-06-06T14:01:44Z",
+			"revision": "e9590cac14982635b4c249cb3aa7b5493dd0190e",
+			"revisionTime": "2018-06-08T14:11:19Z",
 			"version": "cache-collision",
 			"versionExact": "cache-collision"
 		},
 		{
 			"checksumSHA1": "TBKZF++bCB4ZKEZHaCUUbSOOjn8=",
 			"path": "github.com/newrelic/infra-integrations-sdk/integration",
-			"revision": "a54e99b443869b337491193b29ffb470dc7b51a6",
-			"revisionTime": "2018-06-06T14:01:44Z",
+			"revision": "e9590cac14982635b4c249cb3aa7b5493dd0190e",
+			"revisionTime": "2018-06-08T14:11:19Z",
 			"version": "cache-collision",
 			"versionExact": "cache-collision"
 		},
@@ -72,8 +72,8 @@
 		{
 			"checksumSHA1": "yfKl3m9keP7ewqbaf2CS+GQ+qLs=",
 			"path": "github.com/newrelic/infra-integrations-sdk/persist",
-			"revision": "f65d40b014b2b5c6f417720291bf2c64365e16be",
-			"revisionTime": "2018-06-08T09:11:17Z",
+			"revision": "e9590cac14982635b4c249cb3aa7b5493dd0190e",
+			"revisionTime": "2018-06-08T14:11:19Z",
 			"version": "cache-collision",
 			"versionExact": "cache-collision"
 		},
