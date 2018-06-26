@@ -46,7 +46,7 @@ func TestPopulateMetrics(t *testing.T) {
 }
 
 func TestPopulateInventory(t *testing.T) {
-	var rawInventory = map[string]interface{}{
+	var rawInventory = inventory.Item{
 		"key_1":                 1,
 		"key_2":                 2,
 		"key_3":                 "foo",
@@ -59,12 +59,12 @@ func TestPopulateInventory(t *testing.T) {
 	populateInventory(i, rawInventory)
 
 	expectedItems := inventory.Items{
-		"key_1":                 map[string]interface{}{"value": 1},
-		"key_2":                 map[string]interface{}{"value": 2},
-		"key_3":                 map[string]interface{}{"value": "foo"},
-		"key_4":                 map[string]interface{}{"test": 2},
-		"my_important_password": map[string]interface{}{"value": "(omitted value)"},
-		"key_6":                 map[string]interface{}{"otherImportantPassword": "(omitted value)"},
+		"key_1":                 {"value": 1},
+		"key_2":                 {"value": 2},
+		"key_3":                 {"value": "foo"},
+		"key_4":                 {"test": 2},
+		"my_important_password": {"value": "(omitted value)"},
+		"key_6":                 {"otherImportantPassword": "(omitted value)"},
 	}
 
 	assert.Equal(t, expectedItems, i.Items())

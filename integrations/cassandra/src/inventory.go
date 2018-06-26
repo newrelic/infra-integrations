@@ -15,13 +15,13 @@ func getInventory() (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	i := make(map[string]interface{})
+	i := make(inventory.Item)
 	err = yaml.Unmarshal(rawYamlFile, &i)
 
 	return i, err
 }
 
-func populateInventory(i *inventory.Inventory, rawInventory map[string]interface{}) error {
+func populateInventory(i *inventory.Inventory, rawInventory inventory.Item) error {
 	for k, v := range rawInventory {
 		switch value := v.(type) {
 		case map[interface{}]interface{}:

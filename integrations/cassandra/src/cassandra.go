@@ -39,7 +39,6 @@ func main() {
 	}
 
 	e := i.LocalEntity()
-	// we want to use the same logger as the integration
 	l := i.Logger()
 
 	fatalIfErr(l, jmx.Open(args.Hostname, strconv.Itoa(args.Port), args.Username, args.Password))
