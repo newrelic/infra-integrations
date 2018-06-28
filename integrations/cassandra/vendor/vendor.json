@@ -3,13 +3,6 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "Ksl4kXr4ty0HwjrLRLZOrNz05Bw=",
-			"origin": "github.com/newrelic/infra-integrations/vendor/github.com/Sirupsen/logrus",
-			"path": "github.com/Sirupsen/logrus",
-			"revision": "f386b40dea25e8d10737cb54702677a676befcc3",
-			"revisionTime": "2018-06-06T15:29:34Z"
-		},
-		{
 			"checksumSHA1": "CSPbwbyzqA6sfORicn4HFtIhF/c=",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "8991bc29aa16c548c550c7ff78260e27b9ab7c73",
@@ -63,13 +56,6 @@
 			"revisionTime": "2018-06-04T08:48:20Z"
 		},
 		{
-			"checksumSHA1": "/OBil2T0jjmaRvLhTCsMXLVG2N4=",
-			"origin": "github.com/newrelic/infra-integrations/vendor/github.com/newrelic/infra-integrations-sdk/metric",
-			"path": "github.com/newrelic/infra-integrations-sdk/metric",
-			"revision": "f386b40dea25e8d10737cb54702677a676befcc3",
-			"revisionTime": "2018-06-06T15:29:34Z"
-		},
-		{
 			"checksumSHA1": "yfKl3m9keP7ewqbaf2CS+GQ+qLs=",
 			"path": "github.com/newrelic/infra-integrations-sdk/persist",
 			"revision": "e9590cac14982635b4c249cb3aa7b5493dd0190e",
@@ -94,13 +80,6 @@
 			"path": "github.com/stretchr/testify/assert",
 			"revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
 			"revisionTime": "2018-03-14T08:05:35Z"
-		},
-		{
-			"checksumSHA1": "ZMJGrTuCGRJQJNtgXE/6+QQ1mgQ=",
-			"origin": "github.com/newrelic/infra-integrations/vendor/golang.org/x/sys/unix",
-			"path": "golang.org/x/sys/unix",
-			"revision": "f386b40dea25e8d10737cb54702677a676befcc3",
-			"revisionTime": "2018-06-06T15:29:34Z"
 		},
 		{
 			"checksumSHA1": "AnKBN2Q4AWaSNb0JyINBQbnpxGM=",
