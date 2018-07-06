@@ -36,7 +36,7 @@ var (
 )
 
 const (
-	jmxLineBuffer = 4 * 1024 * 1024 // Max 4MB per line. If single lines are outputting more JSON than that, we likely need smaller-scoped JMX queries
+	jmxLineBuffer   = 4 * 1024 * 1024 // Max 4MB per line. If single lines are outputting more JSON than that, we likely need smaller-scoped JMX queries
 	queryLineBuffer = 64 * 1024
 )
 
@@ -99,7 +99,7 @@ func Open(hostname, port, username, password string) error {
 	go func() {
 		if err = cmd.Wait(); err != nil {
 			stdErr, _ := ioutil.ReadAll(cmdError)
-			cmdErr <- fmt.Errorf("JMX tool exited with error: %s (%s)", err, string(stdErr))
+			cmdErr <- fmt.Errorf("JMX tool exited with error: %s [state: %s] (%s)", err, cmd.ProcessState, string(stdErr))
 		}
 		done.Done()
 

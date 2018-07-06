@@ -39,9 +39,9 @@
 			"revisionTime": "2018-07-04T15:45:24Z"
 		},
 		{
-			"checksumSHA1": "qQbqjVJEJ9LY35Tz/vR6cA9jaC4=",
+			"checksumSHA1": "9Guba0GJrC3vtLXAOH5tv0UcBoE=",
 			"path": "github.com/newrelic/infra-integrations-sdk/jmx",
-			"revision": "b02ef1f0d39daa2857038f90dfd9af0a44206cd8",
+			"revision": "c4810e7d259c0e86b478b0c360058c872d61546e",
 			"revisionTime": "2018-07-04T15:45:24Z",
 			"version": "reduceJmxAlloc",
 			"versionExact": "reduceJmxAlloc"
