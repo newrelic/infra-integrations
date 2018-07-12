@@ -30,9 +30,7 @@ func TestPopulateMetrics(t *testing.T) {
 		"functionSource": {functionSource, metric.GAUGE},
 	}
 
-	s, err := metric.NewSet("eventType", persist.NewInMemoryStore())
-	assert.NoError(t, err)
-
+	s := metric.NewSet("eventType", persist.NewInMemoryStore())
 	populateMetrics(log.Discard, s, rawMetrics, metricDefinition)
 
 	sample := s.Metrics
