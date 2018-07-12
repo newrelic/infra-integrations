@@ -29,7 +29,7 @@ validate-only:
 		exit 1 ;\
 	fi
 	@printf "=== $(INTEGRATION) === [ validate ]: running golint... "
-	@OUTPUT="$(shell golint ./...)" ;\
+	@OUTPUT="$(shell golint src)" ;\
 	if [ -z "$$OUTPUT" ]; then \
 		echo "passed." ;\
 	else \
