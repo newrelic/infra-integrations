@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Updated SDK to v3.
 
+## 1.2.0 (2018-07-11)
+### Added
+- Add threadpool and histogram metrics
+
 ## 1.1.0 (2017-10-16)
 ### Added
 - Set column families limit as a configurable value
