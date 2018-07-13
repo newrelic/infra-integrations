@@ -14,7 +14,7 @@ instances:
     - name: cassandra-inventory
       command: inventory
       arguments:
-          config_path: /etc/cassandra.yml
+          config_path: /etc/cassandra/cassandra.yaml
       labels:
           env: production
           role: cassandra

@@ -3,9 +3,9 @@ package main
 import (
 	"regexp"
 
+	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/jmx"
 	"github.com/newrelic/infra-integrations-sdk/log"
-	"github.com/newrelic/infra-integrations-sdk/metric"
 )
 
 // getMetrics will gather all node and keyspace level metrics and return them as two maps
@@ -73,7 +73,7 @@ func getMetrics() (map[string]interface{}, map[string]map[string]interface{}, er
 	return metrics, columnFamilyMetrics, nil
 }
 
-func populateMetrics(sample *metric.MetricSet, metrics map[string]interface{}, definition map[string][]interface{}) {
+func populateMetrics(l log.Logger, s *metric.Set, metrics map[string]interface{}, definition map[string][]interface{}) {
 	notFoundMetrics := make([]string, 0)
 	for metricName, metricConf := range definition {
 		rawSource := metricConf[0]
@@ -96,7 +96,7 @@ func populateMetrics(sample *metric.MetricSet, metrics map[string]interface{}, d
 		case func(map[string]interface{}) (float64, bool):
 			rawMetric, ok = source(metrics)
 		default:
-			log.Debug("Invalid raw source metric for %s", metricName)
+			l.Debugf("Invalid raw source metric for %s", metricName)
 			continue
 		}
 
@@ -106,14 +106,13 @@ func populateMetrics(sample *metric.MetricSet, metrics map[string]interface{}, d
 			continue
 		}
 
-		err := sample.SetMetric(metricName, rawMetric, metricType)
+		err := s.SetMetric(metricName, rawMetric, metricType)
 		if err != nil {
-			log.Warn("Error setting value: %s", err)
+			l.Errorf("setting value: %s", err)
 			continue
 		}
 	}
 	if len(notFoundMetrics) > 0 {
-		log.Debug("Can't find raw metrics in results for keys: %v", notFoundMetrics)
+		l.Debugf("Can't find raw metrics in results for keys: %v", notFoundMetrics)
 	}
-
 }

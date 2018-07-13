@@ -19,11 +19,8 @@ validate-deps:
 	@go get -v $(VALIDATE_DEPS)
 
 validate-only:
-ifeq ($(strip $(GO_FILES)),)
-	@echo "=== $(INTEGRATION) === [ validate ]: no Go files found. Skipping validation."
-else
 	@printf "=== $(INTEGRATION) === [ validate ]: running gofmt... "
-	@OUTPUT="$(shell gofmt -l $(GO_FILES))" ;\
+	@OUTPUT="$(shell gofmt -l src)" ;\
 	if [ -z "$$OUTPUT" ]; then \
 		echo "passed." ;\
 	else \
@@ -32,7 +29,7 @@ else
 		exit 1 ;\
 	fi
 	@printf "=== $(INTEGRATION) === [ validate ]: running golint... "
-	@OUTPUT="$(shell golint ./...)" ;\
+	@OUTPUT="$(shell golint src)" ;\
 	if [ -z "$$OUTPUT" ]; then \
 		echo "passed." ;\
 	else \
@@ -49,7 +46,6 @@ else
 		echo "$$OUTPUT" ;\
 		exit 1;\
 	fi
-endif
 
 validate: validate-deps validate-only
 
@@ -59,7 +55,7 @@ compile-deps:
 
 bin/$(BINARY_NAME):
 	@echo "=== $(INTEGRATION) === [ compile ]: building $(BINARY_NAME)..."
-	@go build -v -o bin/$(BINARY_NAME) $(GO_FILES)
+	@go build -v -o bin/$(BINARY_NAME) src/*
 
 compile: compile-deps bin/$(BINARY_NAME)
 

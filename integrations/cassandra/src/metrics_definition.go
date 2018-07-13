@@ -1,12 +1,21 @@
 package main
 
-import "github.com/newrelic/infra-integrations-sdk/metric"
+import (
+	"github.com/newrelic/infra-integrations-sdk/data/metric"
+)
 
 var commonDefinition = map[string][]interface{}{
 	"software.version":   {"org.apache.cassandra.db:type=StorageService,attr=ReleaseVersion", metric.ATTRIBUTE},
 	"cluster.name":       {"org.apache.cassandra.db:type=StorageService,attr=ClusterName", metric.ATTRIBUTE},
 	"cluster.datacenter": {"org.apache.cassandra.db:type=EndpointSnitchInfo,attr=Datacenter", metric.ATTRIBUTE},
 	"cluster.rack":       {"org.apache.cassandra.db:type=EndpointSnitchInfo,attr=Rack", metric.ATTRIBUTE},
+}
+
+// attributes that make a metric-set unique.
+var metricSetAttributes = metric.Attributes{
+	metric.Attr("db.keyspace", "keyspace"),
+	metric.Attr("db.columnFamily", "columnFamily"),
+	metric.Attr("db.keyspaceAndColumnFamily", "keyspaceAndColumnFamily"),
 }
 
 // All metrics we want to provide for the cassandra integration
@@ -204,10 +213,6 @@ var columnFamilyDefinition = map[string][]interface{}{
 	"db.meanRowSize":                              {"org.apache.cassandra.metrics:type=ColumnFamily,name=MeanRowSize,attr=Value", metric.GAUGE},
 	"db.maxRowSize":                               {"org.apache.cassandra.metrics:type=ColumnFamily,name=MaxRowSize,attr=Value", metric.GAUGE},
 	"db.minRowSize":                               {"org.apache.cassandra.metrics:type=ColumnFamily,name=MinRowSize,attr=Value", metric.GAUGE},
-
-	"db.keyspace":                {"keyspace", metric.ATTRIBUTE},
-	"db.columnFamily":            {"columnFamily", metric.ATTRIBUTE},
-	"db.keyspaceAndColumnFamily": {"keyspaceAndColumnFamily", metric.ATTRIBUTE},
 }
 
 // The patterns used to get all the beans needed for the metrics defined above
