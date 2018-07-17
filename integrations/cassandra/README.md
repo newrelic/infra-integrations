@@ -41,3 +41,8 @@ $ ./bin/nr-cassandra --help
 ```
 
 For managing external dependencies [govendor tool](https://github.com/kardianos/govendor) is used. It is required to lock all external dependencies to specific version (if possible) into vendor directory.
+
+## Running on a containerized agent
+
+If you are running this integration in a [containerized agent](https://hub.docker.com/r/newrelic/infrastructure/), you should use a version greater than 0.0.26, otherwise the integration could yield `defunct` processes.
+
