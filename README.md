@@ -7,14 +7,37 @@ metrics and inventory for monitoring the services. That data will be findable an
 usable in New Relic Infrastructure and in New Relic Insights. You can find more
 information on how to access and visualize that data on [our docs site](https://docs.newrelic.com/docs/find-use-infrastructure-integration-data).
 
- The New Relic Infrastructure Integrations are hosted on [github](https://github.com/newrelic/infra-integrations),
- and the Integrations Golang SDK is hosted on [github](https://github.com/newrelic/infra-integrations-sdk).
+This repository serves as an aggregator where you can find each of our
+integrations as submodules under the `integrations/` directory, you'll find
+more information about them in the following section. Previously this was a
+mono-repo that hosted the source code of the integrations, but as the number of
+integrations grew we move them to their own repositories.
 
+The Integrations Golang SDK is hosted on [github](https://github.com/newrelic/infra-integrations-sdk).
 
 ## Compatibility and requirements
 
 Up-to-date [our docs site](https://docs.newrelic.com/docs/compatibility-requirements-infrastructure-integration-sdk).
 
+## Official Integrations
+
+To find more information about our integrations, how to configure and use them
+with New Relic, refer to their documentation pages or the README included by
+each of them:
+
+| Integration 	| Documentation 																		| Readme  |
+| ------------- |:-------------:																		| -----:|
+| Cassandra 	| [doc](https://docs.newrelic.com/docs/cassandra-integration-new-relic-infrastructure) 	| [readme.md](https://github.com/newrelic/nri-cassandra/README.md) |
+| MySQL 		| [doc](https://docs.newrelic.com/docs/mysql-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/nri-mysql/README.md) |
+| NGINX 		| [doc](https://docs.newrelic.com/docs/nginx-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/nri-nginx/README.md) |
+| Redis 		| [doc](https://docs.newrelic.com/docs/redis-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/nri-redis/README.md) |
+| Apache 		| [doc](https://docs.newrelic.com/docs/apache-integration-new-relic-infrastructure) 	| [readme.md](https://github.com/newrelic/nri-apache/README.md) |
+
+To download this repository with the integrations as submodules run:
+
+```
+git clone --recurse-submodules https://github.com/newrelic/infra-integrations.git
+```
 
 ## Contributing Code
 
@@ -24,22 +47,6 @@ community. Before submitting a pull request please review [these guidelines](htt
 Following these helps us efficiently review and incorporate your contribution
 and avoid breaking your code with future changes to the agent.
 
-
-## Official Integrations
-
-Currently the set of official integrations includes five services, to find more
-information about each one of them, how to configure and use them with New Relic,
-refer to their documentation pages or the README included by each of them:
-
-
-| Integration 	| Documentation 																		| Readme  |
-| ------------- |:-------------:																		| -----:|
-| Cassandra 	| [doc](https://docs.newrelic.com/docs/cassandra-integration-new-relic-infrastructure) 	| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/cassandra/README.md) |
-| MySQL 		| [doc](https://docs.newrelic.com/docs/mysql-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/mysql/README.md) |
-| NGINX 		| [doc](https://docs.newrelic.com/docs/nginx-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/nginx/README.md) |
-| Redis 		| [doc](https://docs.newrelic.com/docs/redis-integration-new-relic-infrastructure) 		| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/redis/README.md) |
-| Apache 		| [doc](https://docs.newrelic.com/docs/apache-integration-new-relic-infrastructure) 	| [readme.md](https://github.com/newrelic/infra-integrations/blob/master/integrations/apache/README.md) | 
-
 ## Custom Integrations
 
 To extend your monitoring solution with custom metrics, we offer the Integrations
@@ -47,28 +54,6 @@ Golang SDK which can be found on [github](https://github.com/newrelic/infra-inte
 
 Refer to [our docs site](https://docs.newrelic.com/docs/infrastructure/integrations-sdk/get-started/intro-infrastructure-integrations-sdk)
 to get help on how to build your custom integrations.
-
-
-## Build and Test
-
-The project includes a set of makefiles to help with building and running the unit
-tests for the official integrations.
-
-Running the unit tests for all the integrations or a specific set of them is as
-easy as calling the following commands from the project root:
-
-```bash
-$ make test
-$ INTEGRATIONS="nginx mysql" make test
-```
-
-Similarly, to build all the integrations or a specific set of them can be done
-by calling the following commands from the project root:
-
-```bash
-$ make build
-$ INTEGRATIONS="nginx mysql" make build
-```
 
 ## Support
 
