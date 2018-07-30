@@ -1,0 +1,15 @@
+[submodule "integrations/nri-nginx"]
+	path = integrations/nri-nginx
+	url = git@github.com:/newrelic/nri-nginx.git
+[submodule "integrations/nri-apache"]
+	path = integrations/nri-apache
+	url = git@github.com:/newrelic/nri-apache.git
+[submodule "integrations/nri-redis"]
+	path = integrations/nri-redis
+	url = git@github.com:/newrelic/nri-redis.git
+[submodule "integrations/nri-cassandra"]
+	path = integrations/nri-cassandra
+	url = git@github.com:/newrelic/nri-cassandra.git
+[submodule "integrations/nri-mysql"]
+	path = integrations/nri-mysql
+	url = git@github.com:/newrelic/nri-mysql.git
