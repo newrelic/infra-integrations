@@ -1,8 +1,7 @@
 # Guidelines for Contributing Code
 
-At New Relic we welcome community code contributions to the Ruby agent, and have
-taken effort to make this process easy for both contributors and our development
-team.
+At New Relic we welcome community code contributions, and have taken effort to
+make this process easy for both contributors and our development team.
 
 ## Branches
 
@@ -14,8 +13,8 @@ Availability.
 
 ## Testing
 
-The agent includes a suite of unit tests with each package which should be used to
-verify your changes don't break existing functionality.
+The code includes a suite of unit tests with each package which should be used
+to verify your changes don't break existing functionality.
 
 ### Running Tests
 
