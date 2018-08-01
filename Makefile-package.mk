@@ -26,7 +26,7 @@ aforementioned integrations, and installs all of them. You may prefer\n\
 to install them individually, selecting only those that you need.
 endef
 
-FPM_COMMON_OPTIONS = --verbose -C empty -s dir -n $(PROJECT_NAME) -v $(VERSION) --iteration $(RELEASE)\
+FPM_COMMON_OPTIONS = --verbose -C tmp -s dir -n $(PROJECT_NAME) -v $(VERSION) --iteration $(RELEASE)\
  --prefix "" --license $(LICENSE) --vendor $(VENDOR) -m $(PACKAGER) --url $(PACKAGE_URL)\
  --description "$$(printf $(DESCRIPTION))"\
  --depends $(DEP_APACHE) --depends $(DEP_CASSANDRA) --depends $(DEP_MYSQL) --depends $(DEP_NGINX) --depends $(DEP_REDIS)
