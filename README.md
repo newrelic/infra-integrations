@@ -55,6 +55,11 @@ Golang SDK which can be found on [github](https://github.com/newrelic/infra-inte
 Refer to [our docs site](https://docs.newrelic.com/docs/infrastructure/integrations-sdk/get-started/intro-infrastructure-integrations-sdk)
 to get help on how to build your custom integrations.
 
+We also provided a [command line builder tool](https://github.com/newrelic/nr-integrations-builder)
+for creating and scaffolding new integration in Golang. This will generate the
+project structure and include the dependencies needed (including the
+sdk) for creating your custom integrations.
+
 ## Support
 
 You can find more detailed documentation [on our website](http://newrelic.com/docs),
