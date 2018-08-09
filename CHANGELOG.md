@@ -1,5 +1,9 @@
 # Change Log
-All notable changes to this project will be documented in this file.
+
+This changelog is kept for historic reasons, each integration now lives in it's
+own repository and maintains its own independent CHANGELOG. The list of
+integrations and their corresponding repositories can be found in the
+[readme](README.md).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
