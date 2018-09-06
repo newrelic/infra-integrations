@@ -32,8 +32,8 @@ FPM_COMMON_OPTIONS = --verbose -C tmp -s dir -n $(PROJECT_NAME) -v $(VERSION) --
  --replaces "$(DEP_APACHE)" --replaces "$(DEP_CASSANDRA)" --replaces "$(DEP_MYSQL)" --replaces "$(DEP_NGINX)" --replaces "$(DEP_REDIS)"\
  --depends $(DEP_APACHE) --depends "$(DEP_CASSANDRA) >= 2.0.0" --depends $(DEP_MYSQL) --depends $(DEP_NGINX) --depends $(DEP_REDIS)
 
-FPM_DEB_OPTIONS    = -t deb -p $(PACKAGES_DIR)/deb/ --replaces "newrelic-infra-integrations-beta (<= 1.0.0)"
-FPM_RPM_OPTIONS    = -t rpm -p $(PACKAGES_DIR)/rpm/ --epoch 0 --rpm-summary $(SUMMARY) --replaces "newrelic-infra-integrations-beta <= 1.0.0"
+FPM_DEB_OPTIONS    = -t deb -p $(PACKAGES_DIR)/deb/ --replaces "newrelic-infra-integrations-beta (<= 1.0.0)" --replaces "newrelic-infra-integrations (<= 1.4.0)"
+FPM_RPM_OPTIONS    = -t rpm -p $(PACKAGES_DIR)/rpm/ --epoch 0 --rpm-summary $(SUMMARY) --replaces "newrelic-infra-integrations-beta <= 1.0.0" --replaces "newrelic-infra-integrations <= 1.4.0"
 
 package: $(PACKAGE_TYPES)
 
