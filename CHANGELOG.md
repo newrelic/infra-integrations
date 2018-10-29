@@ -8,6 +8,14 @@ integrations and their corresponding repositories can be found in the
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.6.0 (2018-10-26)
+### Changed
+- Apache integration [v1.1.2](https://github.com/newrelic/nri-apache/blob/master/CHANGELOG.md#112-2018-10-18)
+- Cassandra integration [v2.0.2](https://github.com/newrelic/nri-cassandra/blob/master/CHANGELOG.md#202-2018-09-12)
+- MySQL integration [v1.1.2](https://github.com/newrelic/nri-mysql/blob/master/CHANGELOG.md#112-2018-10-16)
+- Nginx integration [v1.0.1](https://github.com/newrelic/nri-nginx/blob/master/CHANGELOG.md#101-2018-09-07)
+- Redis integration [v1.0.1](https://github.com/newrelic/nri-redis/blob/master/CHANGELOG.md#101-2018-09-07)
+
 ## 1.4.0 (2018-07-11)
 ### Changed
 - Cassandra integration [v1.2.0](integrations/cassandra/CHANGELOG.md#120-2018-07-11)
