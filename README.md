@@ -1,5 +1,49 @@
 # New Relic Infrastructure Integrations
 
+**DEPRECATION NOTICE AND UPGRADE INSTRUCTIONS**
+
+This package was created at a time when New Relic Infrastructure was just
+starting with a reduced number of developers. The decision to use a single 
+package for installing all our integrations, and a mono-repository to host the
+code, was something that made sense at the time; however, now the circumstances
+are very different, we have significally increased the number of integrations 
+and the people working on them, which made us switch to an approach based on
+individual repositories and packages per integration, this allows us more 
+control, faster delivery, it's easier to maintain and causes less errors.
+
+Since version `1.7.0` this package started using the individual integration
+package under the hood. We reached a point where we think this monorepository
+has outlived its usefulness. We want to encourage users to move on to the 
+individual packages, that's why we decided to stop updating it, and no new 
+versions of it will be released in the future.
+
+This package will be frozen on the following integrations versions:
+
+- Cassandra - nri-cassandra version 2.0.3
+- MySQL - nri-mysql version 1.1.5
+- Redis - nri-redis version 1.0.1
+- Nginx - nri-nginx version 1.0.2
+- Apache - nri-apache version 1.1.2
+
+If you're still using this package, we advice you to follow the [NewRelic docs
+on how to uninstall integrations][1]; basically:
+
+- Debian/Ubuntu:
+	1. `sudo apt-get remove newrelic-infra-integrations`
+	1. `sudo apt-get autoremove`
+- CentOS/RHEL/Amazon:
+	1. `sudo yum remove newrelic-infra-integrations`
+	1. `sudo yum autoremove`
+- SLES:
+	1. `sudo zypper -n remove newrelic-infra-integrations --clean-deps`
+
+Then, follow the [NewRelic docs on how to install integrations][2] to install
+the individual integrations you need, keep in mind that the change should be
+transparent, your configuration files won't be deleted by uninstalling
+this package and will be valid for the individual packages.
+
+**END OF DEPRECATION NOTICE AND UPGRADE INSTRUCTIONS**
+
 New Relic Infrastructure, provided by New Relic, Inc (http://www.newrelic.com),
 offers flexible, dynamic server monitoring. This package contains the set of
 official integrations supported by New Relic, built to provide the essential
@@ -73,3 +117,6 @@ Find a bug? Contact us via [support.newrelic.com](http://support.newrelic.com/),
 or email support@newrelic.com.
 
 New Relic, Inc.
+
+[1]: https://docs.newrelic.com/docs/infrastructure/new-relic-infrastructure/installation/uninstall-infrastructure-agent#uninstall-integrations
+[2]: https://docs.newrelic.com/docs/integrations/host-integrations/installation/install-host-integrations-built-new-relic
