@@ -2,19 +2,20 @@
 
 **DEPRECATION NOTICE AND UPGRADE INSTRUCTIONS**
 
-This package was born at a time when the New Relic Infrastructure team was just
-starting, it was a reduced number of developers, who took an immense challenge
-and deliver amazing results. The decision to use a monorepo for all our
-itegrations, was something that made sense at the time; as things inevitably
-change, now the circumstances are very different, and we have taken a different
-approach by having individual repose and packages per integration, this allows
-us more control, faster delivery, it's easier to maintain and causes less errors.
+This package was created at a time when New Relic Infrastructure was just
+starting with a reduced number of developers. The decision to use a single 
+package for installing all our integrations, and a mono-repository to host the
+code, was something that made sense at the time; however, now the circumstances
+are very different, we have significally increased the number of integrations 
+and the people working on them, which made us switch to an approach based on
+individual repositories and packages per integration, this allows us more 
+control, faster delivery, it's easier to maintain and causes less errors.
 
 Since version `1.7.0` this package started using the individual integration
-package under the hood. We have reached a point where we think this monorepo has
-outlived its usefulness. We want to encourage the remaining users of it to move
-on to the individual packages; that's why, we have decided to stop updating it
-and no new versions of it will be released.
+package under the hood. We reached a point where we think this monorepository
+has outlived its usefulness. We want to encourage users to move on to the 
+individual packages, that's why we decided to stop updating it, and no new 
+versions of it will be released in the future.
 
 This package will be frozen on the following integrations versions:
 
