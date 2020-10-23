@@ -16,14 +16,8 @@ PACKAGE_URL        = "https://www.newrelic.com/infrastructure"
 SUMMARY            = "New Relic Infrastructure Integrations"
 
 define DESCRIPTION
-New Relic Infrastructure Integrations extend the core New Relic\n\
-Infrastructure agent\'s capabilities to allow you to collect metric and\n\
-live state data from your infrastructure components such as MySQL,\n\
-NGINX and Cassandra.\n\
-\n\
-This is a meta-package that specifies dependencies to the\n\
-aforementioned integrations, and installs all of them. You may prefer\n\
-to install them individually, selecting only those that you need.
+This package is obsolete and is not installing any integration\n\
+
 endef
 
 FPM_COMMON_OPTIONS = --verbose -C tmp -s dir -n $(PROJECT_NAME) -v $(VERSION) --iteration $(RELEASE)\
