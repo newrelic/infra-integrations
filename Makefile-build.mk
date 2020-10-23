@@ -1,7 +1,7 @@
 VALIDATE_DEPS = golang.org/x/lint/golint
 TEST_DEPS     = github.com/axw/gocov/gocov github.com/AlekSi/gocov-xml
 
-build: clean validate test compile
+build: clean test 
 
 $(INTS):
 	@if [ -f $(INTEGRATIONS_DIR)/$@/Makefile ]; then \
