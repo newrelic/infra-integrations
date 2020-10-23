@@ -11,19 +11,8 @@ and the people working on them, which made us switch to an approach based on
 individual repositories and packages per integration, this allows us more 
 control, faster delivery, it's easier to maintain and causes less errors.
 
-Since version `1.7.0` this package started using the individual integration
-package under the hood. We reached a point where we think this mono-repository
-has outlived its usefulness. We want to encourage users to move on to the 
-individual packages, that's why we decided to stop updating it, and no new 
-versions of it will be released in the future.
-
-This package will be frozen on the following integrations versions:
-
-- Cassandra - nri-cassandra version 2.0.3
-- MySQL - nri-mysql version 1.1.5
-- Redis - nri-redis version 1.0.1
-- Nginx - nri-nginx version 1.0.2
-- Apache - nri-apache version 1.1.2
+Since version `2.0.0` this package will be empty and no integrations will be 
+installed. 
 
 If you're still using this package, we advise you to follow the [NewRelic docs
 on how to uninstall integrations][1]; basically:
